@@ -16,7 +16,6 @@ namespace M365UK.Functions {
   "IsEncrypted": false,
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-    "AppSettings:ServerAppId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "AppSettings:ClientAppId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "AppSettings:ClientAppSecret": "**********************************",
     "AppSettings:TenantId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
