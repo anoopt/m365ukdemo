@@ -2,10 +2,8 @@ using M365UK.Functions.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Identity.Client;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
 using System.Threading.Tasks;
-using ClientCredential = Microsoft.IdentityModel.Clients.ActiveDirectory.ClientCredential;
 
 namespace M365UK.Functions.Helpers.Auth
 {

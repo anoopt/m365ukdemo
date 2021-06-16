@@ -37,6 +37,8 @@ namespace M365UK.Functions
             _authProviders = authProviders;
         }
 
+        #region ADAL
+        //* ADAL
 
         [FunctionName("GetGroupsUsingADAL")]
         public async Task<IActionResult> GetGroupsUsingADAL(
@@ -48,6 +50,10 @@ namespace M365UK.Functions
             var groups = await GetGroups(accessToken);
             return new OkObjectResult(groups);
         }
+        #endregion
+
+        #region MSAL
+        //* MSAL
 
         [FunctionName("GetGroupsUsingMSAL")]
         public async Task<IActionResult> GetGroupsUsingMSAL(
@@ -59,6 +65,10 @@ namespace M365UK.Functions
             var groups = await GetGroups(accessToken);
             return new OkObjectResult(groups);
         }
+        #endregion
+
+        #region App Auth Library
+        //* App Auth Library
 
         [FunctionName("GetGroupsUsingAppAuthLibrary")]
         public async Task<IActionResult> GetGroupsUsingAppAuthLibrary(
@@ -70,6 +80,10 @@ namespace M365UK.Functions
             var groups = await GetGroups(accessToken);
             return new OkObjectResult(groups);
         }
+        #endregion
+
+        #region Azure.Identity
+        //* Azure.Identity
 
         [FunctionName("GetGroupsUsingAzureIdentity")]
         public async Task<IActionResult> GetGroupsUsingAzureIdentity(
@@ -81,6 +95,8 @@ namespace M365UK.Functions
             var groups = await GetGroups(accessToken);
             return new OkObjectResult(groups);
         }
+        #endregion
+        
         private async Task<List<Value>> GetGroups(string accessToken)
         {
             if (accessToken != null)
