@@ -1,4 +1,3 @@
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -6,13 +5,13 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using System.Net.Http.Json;
 using System.Net.Http;
 using Microsoft.Extensions.Options;
 using M365UK.Functions.Interfaces;
 using System.Net.Http.Headers;
 using System.Collections.Generic;
-
+using M365UK.Functions.Model;
 namespace M365UK.Functions
 {
     public class Manager
@@ -82,32 +81,16 @@ namespace M365UK.Functions
             var groups = await GetGroups(accessToken);
             return new OkObjectResult(groups);
         }
-        private async Task<object> GetGroups(string accessToken)
+        private async Task<List<Value>> GetGroups(string accessToken)
         {
-            var groups = new object();
-
             if (accessToken != null)
             {
                 _httpClient.DefaultRequestHeaders.Authorization =
                                 new AuthenticationHeaderValue("Bearer", accessToken);
-
-                HttpResponseMessage getGroupsResult =
-                    await _httpClient.GetAsync("https://graph.microsoft.com/v1.0/groups?$select=displayName");
-                if (getGroupsResult != null && getGroupsResult.IsSuccessStatusCode)
-                {
-                    _log.LogInformation("Got groups using Graph");
-                    Stream contentStream = await getGroupsResult.Content.ReadAsStreamAsync();
-                    
-                    using (var streamReader = new StreamReader(contentStream))
-                    using (var jsonReader = new JsonTextReader(streamReader))
-                    {
-                        JsonSerializer serializer = new JsonSerializer();
-                        groups = serializer.Deserialize<object>(jsonReader);
-                    }
-                }
+                Groups groups = await _httpClient.GetFromJsonAsync<Groups>("https://graph.microsoft.com/v1.0/groups?$select=displayName");
+                return groups?.value;
             }
-
-            return groups;
+            return null;
         }
     }
 }
